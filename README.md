@@ -1,6 +1,6 @@
 # RPG CLI - TypeScript
 
-Um RPG jogável no terminal, desenvolvido em TypeScript.\
+Um RPG jogável no terminal, desenvolvido em TypeScript.
 
 ---
 
@@ -45,5 +45,5 @@ npm run start
 
 - Sistema de batalhas
 - Inventário e itens
-
+- Save/load
 ---
