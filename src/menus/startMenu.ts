@@ -1,8 +1,9 @@
 import { Character } from '../Classes/Character'
 import { classes } from '../Classes/CharClasses/index'
 import { printMenu } from '../utils/print'
+import { loadGame, saveGame } from '../utils/saveGame'
+import { charCreate } from './charCreate'
 import { gameMenu } from './gameMenu'
-
 import prompt from 'prompt-sync'
 
 const input = prompt()
@@ -11,6 +12,12 @@ export function startMenu() {
     let option: number = 0;
     let char: Character | null = null
     const warnPersonagem = '\nCrie um personagem primeiro!\n'
+    // Carrega jogo salvo, se existir
+    const savedGame = loadGame()
+    if (savedGame) {
+        char = savedGame.character
+        console.log(`Bem-vindo de volta, ${char.name}!\n`)
+    }
 
     while (option !== 9) {
         const header = (texto: string) => `\n==== ${texto} ====`
@@ -35,31 +42,7 @@ export function startMenu() {
 
         switch (option) {
             case 1:
-                let selected: string | undefined
-                let classOption: number
-                if (!char) {
-                    console.log(header('Criar Personagem'))
-                } else {
-                    console.log(header('Editar Personagem'))
-                }
-                // loop até escolher uma classe válida
-                while (!selected) {
-                    console.log('Escolha sua classe:')
-                    const keys = Object.keys(classes)
-                    keys.forEach((cls, i) => console.log(`${i + 1} - ${cls}`))
-
-                    classOption = +input('Opção: ')
-                    selected = keys[classOption - 1]
-
-                    if (!selected) {
-                        console.log(`\nClasse inválida, selecione uma entre 1 e ${keys.length} \n`)
-                    }
-                }
-
-                const name = input('Nome: ')
-                const ClassRef = classes[selected]
-                char = new ClassRef(name)
-                console.log(`\nVocê criou: ${selected}! - ${name}\n`)
+                char = charCreate(char ?? undefined);
                 break
             case 2:
                 if (!char) {
@@ -76,7 +59,12 @@ export function startMenu() {
                 gameMenu(char)
                 break
             case 9:
+                if (!char) {
+                    console.log('Saindo...')
+                    break
+                }
                 console.log('Saindo...')
+                saveGame(char)
                 break;
             default:
                 console.log('Opção inválida')

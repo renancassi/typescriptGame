@@ -4,6 +4,7 @@ import { Enemy } from '../Classes/Enemy'
 import prompt from 'prompt-sync'
 import { printMenu } from '../utils/print'
 import { battleLoop } from '../utils/battleLoop'
+import { saveGame } from '../utils/saveGame'
 
 const input = prompt()
 
@@ -40,7 +41,8 @@ export function gameMenu(char: Character) {
                 break
 
             case 9:
-                console.log('Saindo do menu do jogo...')
+                console.log('Voltando ao menu principal...')
+                saveGame(char)
                 break
 
             default:
