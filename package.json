@@ -18,6 +18,7 @@
     "typescript": "^5.9.2"
   },
   "devDependencies": {
+    "@types/node": "^24.5.2",
     "@types/prompt-sync": "^4.2.3"
   }
 }
