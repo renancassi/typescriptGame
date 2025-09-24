@@ -2,7 +2,7 @@
 import { Character } from '../Classes/Character'
 import { Enemy } from '../Classes/Enemy'
 import prompt from 'prompt-sync'
-import { printMenu } from '../utils/printMenu'
+import { printMenu } from '../utils/print'
 import { battleLoop } from '../utils/battleLoop'
 
 const input = prompt()

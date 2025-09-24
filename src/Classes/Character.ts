@@ -33,6 +33,10 @@ export class Character implements Fighter, Stats {
         if (!this.isAlive()) console.log(`${this.name} foi derrotado!`);
     }
 
+    /**
+     * Ataca um alvo, causando dano baseado na força do atacante e na defesa do alvo.
+     * @param target Alvo do ataque
+     */
     attack(target: Fighter): void {
         let damage = this.strength - target.defense;
         const isCrit = this.criticalHit();
@@ -41,20 +45,41 @@ export class Character implements Fighter, Stats {
         damage = Math.max(damage, 0);
         console.log(`${this.name} ataca ${target.name} e causa ${damage} de dano${isCrit ? " CRÍTICO!" : ""}`);
         target.takeDamage(damage);
+        this.amountEnergy(20);
     }
 
+    /**
+     * Ataque especial que causa dano aumentado, consumindo toda a energia do personagem.
+     * @param target alvo do ataque especial
+     */
     specialAttack(target: Fighter): void {
-        if (this.energy >= 10) {
-            const damage = Math.max(this.strength - target.defense, 0);
+        if (this.energy === 100) {
+            const damage = Math.max((this.strength * 2.5) - target.defense, 0);
             console.log(`${this.name} usa Ataque Especial em ${target.name} e causa ${damage} de dano.`);
             target.takeDamage(damage);
-            this.energy -= 10;
+            this.resetEnergy();
         } else {
             console.log(`${this.name} não tem energia suficiente para Ataque Especial!`);
         }
     }
 
+    /**
+     * Ataque crítico baseado na sorte do personagem.
+     * @returns true se o ataque for critico.
+     */
     criticalHit(): boolean {
         return Math.random() * 100 < this.luck;
+    }
+
+    amountEnergy(amount: number): void {
+        this.energy = Math.min((this.energy ?? 0) + amount, 100);
+    }
+
+    resetEnergy(): void {
+        this.energy = 0;
+    }
+
+    havesEnergy(): boolean {
+        return (this.energy ?? 0) === 100;
     }
 }

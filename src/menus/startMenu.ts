@@ -1,6 +1,6 @@
 import { Character } from '../Classes/Character'
 import { classes } from '../Classes/CharClasses/index'
-import { printMenu } from '../utils/printMenu'
+import { printMenu } from '../utils/print'
 import { gameMenu } from './gameMenu'
 
 import prompt from 'prompt-sync'

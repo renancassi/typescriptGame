@@ -1,7 +1,7 @@
 import { Character } from "../Classes/Character"
 import { Enemy } from "../Classes/Enemy"
 import prompt from "prompt-sync"
-import { printMenu } from "./printMenu"
+import { printMenu, printTittle } from "./print"
 
 const input = prompt()
 
@@ -14,7 +14,7 @@ export function battleLoop(char: Character, enemy: Enemy) {
         while (!validAction) {
             printMenu(`Turno do Jogador`, [
                 '1 - Atacar',
-                '2 - Ataque Especial'
+                char.havesEnergy() ? '2 - Ataque especial' : '',
             ])
             action = +input("Escolha sua ação: ")
 
@@ -33,9 +33,8 @@ export function battleLoop(char: Character, enemy: Enemy) {
         }
 
         if (!enemy.isAlive()) break
-
         // turno do inimigo
-        console.log("\n--- Turno do Inimigo ---")
+        printTittle("Turno do Inimigo")
         enemy.attack(char)
     }
 
